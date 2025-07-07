@@ -1,47 +1,51 @@
 <template>
-  <div class="user-profile">
-    <h2>Mon profil</h2>
+  <div>
+    <Navbar /> 
 
-    <div v-if="loading">Chargement...</div>
-    <div v-if="error" class="error">{{ error }}</div>
+    <div class="user-profile">
+      <h2>Mon profil</h2>
 
-    <form v-if="!loading" @submit.prevent="updateUser">
-      <div>
-        <label for="username">Nom d'utilisateur :</label>
-        <input id="username" v-model="user.username" required />
-      </div>
+      <div v-if="loading">Chargement...</div>
+      <div v-if="error" class="error">{{ error }}</div>
 
-      <div>
-        <label for="password">Mot de passe (laisser vide pour ne pas changer) :</label>
-        <input
-          id="password"
-          type="password"
-          v-model="password"
-          placeholder="Nouveau mot de passe"
-          autocomplete="new-password"
-        />
-      </div>
+      <form v-if="!loading" @submit.prevent="updateUser">
+        <div>
+          <label for="username">Nom d'utilisateur :</label>
+          <input id="username" v-model="user.username" required />
+        </div>
 
-      <div>
-        <label for="age">Âge :</label>
-        <input id="age" type="number" v-model.number="user.age" min="0" />
-      </div>
+        <div>
+          <label for="password">Mot de passe (laisser vide pour ne pas changer) :</label>
+          <input
+            id="password"
+            type="password"
+            v-model="password"
+            placeholder="Nouveau mot de passe"
+            autocomplete="new-password"
+          />
+        </div>
 
-      <div>
-        <label for="poids">Poids (kg) :</label>
-        <input id="poids" type="number" step="0.1" v-model.number="user.poids" min="0" />
-      </div>
+        <div>
+          <label for="age">Âge :</label>
+          <input id="age" type="number" v-model.number="user.age" min="0" />
+        </div>
 
-      <button type="submit">Mettre à jour</button>
-    </form>
+        <div>
+          <label for="poids">Poids (kg) :</label>
+          <input id="poids" type="number" step="0.1" v-model.number="user.poids" min="0" />
+        </div>
 
-    <button
-      @click="deleteAccount"
-      class="btn-delete"
-      style="margin-top:20px; color: red;"
-    >
-      Supprimer mon compte
-    </button>
+        <button type="submit">Mettre à jour</button>
+      </form>
+
+      <button
+        @click="deleteAccount"
+        class="btn-delete"
+        style="margin-top:20px; color: red;"
+      >
+        Supprimer mon compte
+      </button>
+    </div>
   </div>
 </template>
 
@@ -49,12 +53,16 @@
 import axios from "axios";
 import { onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
+import Navbar from '../components/NavBar.vue';
 
 export default {
   name: "UserProfile",
+  components: {
+    Navbar,
+  },
   setup() {
     const user = ref({
-      id: null,          // Ajout id ici
+      id: null,
       username: "",
       age: null,
       poids: null,
@@ -72,12 +80,12 @@ export default {
       error.value = null;
       try {
         const token = localStorage.getItem("token");
-        const response = await axios.get(`${apiBaseUrl}/me`, {  // GET /api/users/me
+        const response = await axios.get(`${apiBaseUrl}/me`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         });
-        user.value.id = response.data.id;              // <-- stocke l'id
+        user.value.id = response.data.id;
         user.value.username = response.data.username || "";
         user.value.age = response.data.age || null;
         user.value.poids = response.data.poids || null;
@@ -92,7 +100,6 @@ export default {
       error.value = null;
       try {
         const token = localStorage.getItem("token");
-
         const payload = {
           username: user.value.username,
           age: user.value.age,
@@ -102,7 +109,6 @@ export default {
           payload.password = password.value.trim();
         }
 
-        // Envoie vers /api/users/{id} avec l'id récupéré
         await axios.put(`${apiBaseUrl}/${user.value.id}`, payload, {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -116,8 +122,6 @@ export default {
     };
 
     const deleteAccount = async () => {
-
-    
       if (
         !confirm(
           "Êtes-vous sûr de vouloir supprimer votre compte ? Cette action est irréversible."
@@ -127,7 +131,7 @@ export default {
       }
       try {
         const token = localStorage.getItem("token");
-        await axios.delete(`${apiBaseUrl}/${user.value.id}`, {  // delete vers /api/users/{id}
+        await axios.delete(`${apiBaseUrl}/${user.value.id}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },

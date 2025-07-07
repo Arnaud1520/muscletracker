@@ -5,29 +5,26 @@ namespace App\Document;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[MongoDB\Document(collection: "workouts")]
 class Workout
 {
     #[MongoDB\Id]
+    #[Groups(['workout:read'])]
     private ?string $id = null;
 
-    #[MongoDB\ReferenceOne(targetDocument: User::class)]
-    private User $user;
+    #[MongoDB\Field(type: "string")]
+    #[Groups(['workout:read', 'workout:write'])]
+    private string $name;
 
-    #[MongoDB\Field(type: "date")]
-    private \DateTimeInterface $date;
-
-    /**
-     * Liste des exercices avec détails (reps, sets, poids)
-     * stockée comme un tableau de sous-documents
-     */
-    #[MongoDB\Field(type: "collection")]
-    private array $exercises = [];
+    #[MongoDB\EmbedMany(targetDocument: ExerciseEntry::class)]
+    #[Groups(['workout:read', 'workout:write'])]
+    private Collection $exercises;
 
     public function __construct()
     {
-        $this->exercises = [];
+        $this->exercises = new ArrayCollection();
     }
 
     public function getId(): ?string
@@ -35,53 +32,36 @@ class Workout
         return $this->id;
     }
 
-    public function getUser(): User
+    public function getName(): string
     {
-        return $this->user;
+        return $this->name;
     }
 
-    public function setUser(User $user): self
+    public function setName(string $name): self
     {
-        $this->user = $user;
-
-        return $this;
-    }
-
-    public function getDate(): \DateTimeInterface
-    {
-        return $this->date;
-    }
-
-    public function setDate(\DateTimeInterface $date): self
-    {
-        $this->date = $date;
-
+        $this->name = $name;
         return $this;
     }
 
     /**
-     * Retourne un tableau d'exercices avec reps, sets, poids, ex:
-     * [
-     *   ['exerciseId' => 'xxx', 'sets' => 3, 'reps' => 12, 'weight' => 50.0],
-     *   ...
-     * ]
+     * @return Collection|ExerciseEntry[]
      */
-    public function getExercises(): array
+    public function getExercises(): Collection
     {
         return $this->exercises;
     }
 
-    public function setExercises(array $exercises): self
+    public function addExercise(ExerciseEntry $exercise): self
     {
-        $this->exercises = $exercises;
-
+        if (!$this->exercises->contains($exercise)) {
+            $this->exercises[] = $exercise;
+        }
         return $this;
     }
 
-    public function addExercise(array $exercise): self
+    public function removeExercise(ExerciseEntry $exercise): self
     {
-        $this->exercises[] = $exercise;
-
+        $this->exercises->removeElement($exercise);
         return $this;
     }
 }

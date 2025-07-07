@@ -15,7 +15,15 @@ class ExerciseController extends AbstractController
     #[Route('', methods: ['GET'])]
     public function list(DocumentManager $dm): JsonResponse
     {
-        $exercises = $dm->getRepository(Exercise::class)->findAll();
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
+        $user = $this->getUser();
+
+        // On filtre les exercices pour ne récupérer que ceux de l'utilisateur connecté
+        $exercises = $dm->getRepository(Exercise::class)->findBy([
+            'user' => $user
+        ]);
+
         $data = array_map(fn(Exercise $exercise) => [
             'id' => $exercise->getId(),
             'nom' => $exercise->getNom(),
@@ -29,9 +37,13 @@ class ExerciseController extends AbstractController
     #[Route('/{id}', methods: ['GET'])]
     public function getExercise(string $id, DocumentManager $dm): JsonResponse
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
+        $user = $this->getUser();
         $exercise = $dm->getRepository(Exercise::class)->find($id);
-        if (!$exercise) {
-            return new JsonResponse(['error' => 'Exercise not found'], 404);
+
+        if (!$exercise || $exercise->getUser()->getId() !== $user->getId()) {
+            return new JsonResponse(['error' => 'Exercise not found or access denied'], 404);
         }
 
         return new JsonResponse([
@@ -45,12 +57,15 @@ class ExerciseController extends AbstractController
     #[Route('', methods: ['POST'])]
     public function createExercise(Request $request, DocumentManager $dm): JsonResponse
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
         $data = json_decode($request->getContent(), true);
 
         $exercise = new Exercise();
         $exercise->setNom($data['nom'] ?? '');
         $exercise->setCategorie($data['categorie'] ?? '');
         $exercise->setDescription($data['description'] ?? null);
+        $exercise->setUser($this->getUser());  // Associer l'exercice à l'utilisateur connecté
 
         $dm->persist($exercise);
         $dm->flush();
@@ -61,9 +76,13 @@ class ExerciseController extends AbstractController
     #[Route('/{id}', methods: ['PUT'])]
     public function updateExercise(string $id, Request $request, DocumentManager $dm): JsonResponse
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
+        $user = $this->getUser();
         $exercise = $dm->getRepository(Exercise::class)->find($id);
-        if (!$exercise) {
-            return new JsonResponse(['error' => 'Exercise not found'], 404);
+
+        if (!$exercise || $exercise->getUser()->getId() !== $user->getId()) {
+            return new JsonResponse(['error' => 'Exercise not found or access denied'], 404);
         }
 
         $data = json_decode($request->getContent(), true);
@@ -86,9 +105,13 @@ class ExerciseController extends AbstractController
     #[Route('/{id}', methods: ['DELETE'])]
     public function deleteExercise(string $id, DocumentManager $dm): JsonResponse
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
+        $user = $this->getUser();
         $exercise = $dm->getRepository(Exercise::class)->find($id);
-        if (!$exercise) {
-            return new JsonResponse(['error' => 'Exercise not found'], 404);
+
+        if (!$exercise || $exercise->getUser()->getId() !== $user->getId()) {
+            return new JsonResponse(['error' => 'Exercise not found or access denied'], 404);
         }
 
         $dm->remove($exercise);
