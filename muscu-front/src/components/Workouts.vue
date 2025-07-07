@@ -189,4 +189,115 @@ onMounted(() => {
   gap: 0.5rem;
   flex-wrap: wrap;
 }
+
+* {
+  box-sizing: border-box;
+}
+
+h1, h2 {
+  text-align: center;
+  font-weight: bold;
+  color: #222;
+}
+
+form {
+  background: #fff;
+  padding: 2rem;
+  border-radius: 1rem;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  max-width: 800px;
+  margin: 2rem auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+label {
+  font-weight: 600;
+  margin-bottom: 0.3rem;
+  display: block;
+  color: #333;
+}
+
+input,
+select {
+  width: 100%;
+  padding: 0.7rem 1rem;
+  border-radius: 0.5rem;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+}
+
+button {
+  background: #fcb900; /* Couleur jaune Fitness Park */
+  border: none;
+  padding: 0.8rem 1.2rem;
+  font-size: 1rem;
+  border-radius: 0.5rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.2s ease;
+  color: #000;
+}
+
+button:hover {
+  background: #ffcc33;
+}
+
+.exercise-input {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: center;
+  background: #f9f9f9;
+  padding: 1rem;
+  border-radius: 0.8rem;
+  border: 1px solid #ddd;
+}
+
+.exercise-input button {
+  background: #e74c3c;
+  color: #fff;
+  font-size: 1.2rem;
+  padding: 0.6rem 1rem;
+}
+
+.exercise-input button:hover {
+  background: #c0392b;
+}
+
+ul {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 0;
+  list-style: none;
+}
+
+li {
+  background: #f5f5f5;
+  padding: 1.2rem;
+  margin-bottom: 1rem;
+  border-radius: 0.8rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+li strong {
+  font-size: 1.2rem;
+  color: #333;
+}
+
+li button {
+  margin-left: 0.5rem;
+}
+
+div[v-if="message"] {
+  text-align: center;
+  font-weight: bold;
+  margin-top: 1rem;
+  color: #27ae60;
+}
+
 </style>

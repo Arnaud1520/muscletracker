@@ -162,34 +162,97 @@ export default {
 
 <style scoped>
 .user-profile {
-  max-width: 400px;
-  margin: auto;
+  max-width: 420px;
+  margin: 30px auto;
+  padding: 25px 30px;
+  background: #1e1e2f; /* fond sombre */
+  border-radius: 12px;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.6);
+  color: #eee;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 25px;
+  color: #ff5722; /* couleur orange dynamique */
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
 }
 
 label {
   display: block;
-  margin-top: 15px;
+  margin-top: 18px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: #ddd;
 }
 
 input {
   width: 100%;
-  padding: 6px;
-  box-sizing: border-box;
+  padding: 10px 12px;
+  margin-top: 6px;
+  border-radius: 6px;
+  border: none;
+  background: #2c2c44;
+  color: #eee;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+}
+
+input:focus {
+  outline: none;
+  background: #3d3d63;
+  box-shadow: 0 0 8px #ff5722;
+  color: #fff;
 }
 
 button {
-  margin-top: 15px;
-  padding: 8px 12px;
+  margin-top: 25px;
+  width: 100%;
+  background-color: #ff5722;
+  color: white;
+  font-weight: 700;
+  padding: 12px 0;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 1.1rem;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #e64a19;
 }
 
 .btn-delete {
-  background: none;
-  border: none;
-  cursor: pointer;
-  font-weight: bold;
+  background: transparent;
+  border: 2px solid #ff3b3b;
+  color: #ff3b3b;
+  font-weight: 700;
+  border-radius: 10px;
+  padding: 12px 0;
+  width: 100%;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
+
+.btn-delete:hover {
+  background-color: #ff3b3b;
+  color: white;
+}
+
 .error {
-  color: red;
-  margin-bottom: 10px;
+  color: #ff3b3b;
+  margin-bottom: 15px;
+  font-weight: 600;
+  text-align: center;
+}
+
+@media (max-width: 480px) {
+  .user-profile {
+    padding: 20px 15px;
+  }
 }
 </style>
+

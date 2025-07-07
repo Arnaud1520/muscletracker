@@ -55,56 +55,92 @@ function goToLogin() {
 }
 </script>
 
-
 <style scoped>
 .navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem;
-  background-color: #222;
-  color: white;
+  padding: 1rem 2rem;
+  background-color: #1e1e2f; /* fond sombre */
+  box-shadow: 0 4px 10px rgba(0,0,0,0.7);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .nav-list {
   list-style: none;
   display: flex;
-  gap: 1rem;
+  gap: 2rem;
+  margin: 0;
+  padding: 0;
 }
 
 .nav-list li a {
-  color: white;
+  color: #ddd;
   text-decoration: none;
+  font-weight: 600;
+  font-size: 1.05rem;
+  transition: color 0.3s ease, border-bottom 0.3s ease;
+  padding-bottom: 3px;
+  border-bottom: 2px solid transparent;
 }
 
 .nav-list li a.router-link-exact-active {
-  font-weight: bold;
-  border-bottom: 2px solid white;
+  color: #ff5722;
+  border-bottom-color: #ff5722;
+  font-weight: 700;
+}
+
+.nav-list li a:hover {
+  color: #ff7043;
+  border-bottom-color: #ff7043;
 }
 
 .btn {
   color: white;
   border: none;
-  padding: 0.5rem 1rem;
+  padding: 10px 20px;
   cursor: pointer;
-  border-radius: 4px;
-  font-weight: bold;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 1rem;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.4);
 }
 
-/* Déconnexion = rouge */
+/* Déconnexion = rouge vif fitness */
 .btn-logout {
   background-color: #e63946;
+  box-shadow: 0 4px 12px rgba(230, 57, 70, 0.7);
 }
+
 .btn-logout:hover {
   background-color: #d62828;
+  box-shadow: 0 6px 14px rgba(214, 40, 40, 0.8);
 }
 
-/* Connexion = bleu */
+/* Connexion = bleu vif fitness */
 .btn-login {
   background-color: #007BFF;
-}
-.btn-login:hover {
-  background-color: #0056b3;
+  box-shadow: 0 4px 12px rgba(0, 123, 255, 0.7);
 }
 
+.btn-login:hover {
+  background-color: #0056b3;
+  box-shadow: 0 6px 14px rgba(0, 86, 179, 0.8);
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .navbar {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  .nav-list {
+    gap: 1.2rem;
+  }
+  .btn {
+    width: 100%;
+  }
+}
 </style>
+

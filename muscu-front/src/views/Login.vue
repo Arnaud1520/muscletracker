@@ -63,79 +63,116 @@ export default {
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background-color: #f3f4f6;
+  background: linear-gradient(135deg, #1e1e2f 0%, #2c2c44 100%);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  padding: 1rem;
 }
 
 .login-card {
-  background-color: white;
-  padding: 2rem 2.5rem;
-  border-radius: 10px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  background-color: #292b3d;
+  padding: 2.5rem 3rem;
+  border-radius: 16px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.7);
   width: 100%;
-  max-width: 400px;
+  max-width: 420px;
+  color: #ddd;
+  text-align: center;
+  transition: transform 0.3s ease;
+}
+
+.login-card:hover {
+  transform: translateY(-5px);
 }
 
 h2 {
-  margin-bottom: 1.5rem;
-  text-align: center;
-  color: #333;
+  margin-bottom: 2rem;
+  color: #ff5722;
+  font-weight: 700;
+  font-size: 2rem;
 }
 
 .form-group {
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
+  text-align: left;
 }
 
 label {
   display: block;
-  margin-bottom: 0.4rem;
-  color: #444;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  color: #bbb;
 }
 
 input {
   width: 100%;
-  padding: 0.6rem;
-  border: 1px solid #ccc;
-  border-radius: 6px;
+  padding: 0.8rem 1rem;
+  border-radius: 10px;
+  border: none;
+  font-size: 1rem;
+  background-color: #3a3d57;
+  color: white;
+  box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.6);
+  transition: background-color 0.3s ease;
+}
+
+input:focus {
+  outline: none;
+  background-color: #484c6b;
+  box-shadow: 0 0 8px #ff5722;
 }
 
 .btn-login {
   width: 100%;
-  padding: 0.7rem;
-  margin-top: 1rem;
-  background-color: #4f46e5;
+  padding: 0.9rem;
+  background-color: #ff5722;
   color: white;
+  font-weight: 700;
+  font-size: 1.1rem;
   border: none;
-  border-radius: 6px;
+  border-radius: 12px;
   cursor: pointer;
-  transition: background 0.3s ease;
+  box-shadow: 0 5px 15px rgba(255, 87, 34, 0.7);
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .btn-login:hover {
-  background-color: #4338ca;
+  background-color: #e64a19;
+  box-shadow: 0 7px 20px rgba(230, 74, 25, 0.85);
 }
 
 .error {
-  color: red;
-  margin-top: 1rem;
-  text-align: center;
+  margin-top: 1.5rem;
+  color: #ff4444;
+  font-weight: 600;
+  text-shadow: 0 0 5px #ff4444aa;
 }
 
 .register-link {
-  text-align: center;
-  margin-top: 1.5rem;
+  margin-top: 2rem;
+  font-size: 1rem;
+  color: #bbb;
 }
 
 .btn-register {
   background: none;
   border: none;
-  color: #4f46e5;
+  color: #ff5722;
+  font-weight: 700;
   cursor: pointer;
-  font-weight: bold;
   text-decoration: underline;
-  padding: 0;
+  padding: 0 0.3rem;
+  transition: color 0.3s ease;
 }
 
 .btn-register:hover {
-  color: #4338ca;
+  color: #e64a19;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .login-card {
+    padding: 2rem 1.5rem;
+  }
 }
 </style>
+
